@@ -1,4 +1,3 @@
-const app = require('express')();
 const sulla = require('sulla');
 const request = require('request');
 const webhook = "https://api-register.tsl-university.id/receive_message/5dddd9bec1bfdf3a09adda7d";
@@ -28,11 +27,4 @@ function start(client) {
 
     triggerServer(requestMessage, client);    
   });
-
-
-  app.post("/send/:from/:message", (req, res) => {
-    triggerServer({number: req.params.from, message: req.params.message});
-  });
 }
-
-app.listen(2019);
