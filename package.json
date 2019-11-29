@@ -5,6 +5,6 @@
   "license": "MIT",
   "dependencies": {
     "request": "^2.88.0",
-    "sulla": "^1.1.1"
+    "sulla-hotfix": "^1.2.12"
   }
 }
