@@ -12,20 +12,32 @@ function triggerServer(requestMessage, client) {
       console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
       console.log('body:', body); // Print the response status code if a response was received
 
+      
+
       if (response.statusCode === 200) {
-        let snapshot = JSON.parse(body);  
-        if (snapshot && snapshot.reply) {
-         client.sendText(requestMessage.number, snapshot.message);
-        }
+        let snapshot = JSON.parse(body);
+        if (snapshot.reply)
+          client.sendText(requestMessage.number, snapshot.message)
       }
   });
+}
+
+function sanitizeMessage(message) {
+  if (typeof message === 'string') {
+    message = message.replace(/^.*\[/, "TSL_[");
+    message = message.replace(/\].*$/, "]");
+
+    return message;
+  }
+
+  return message;
 }
 
 function start(client) {
   client.onMessage(message => {
     const requestMessage = {
         number: message.from,
-        message: message.body
+        message: sanitizeMessage(message.body)
     };
 
     if (typeof requestMessage.message === 'string')
@@ -41,7 +53,7 @@ function start(client) {
                   if (typeof message.body === 'string') {
                     const requestMessage = {
                         number: message.from._serialized,
-                        message: message.body
+                        message: sanitizeMessage(message.body)
                     };
 
                     if (index === chat.messages.length-1)
