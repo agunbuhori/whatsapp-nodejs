@@ -12,9 +12,11 @@ function triggerServer(requestMessage, client) {
       console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
       console.log('body:', body); // Print the response status code if a response was received
 
-      if (response.statusCode === 200 && snapshot && snapshot.reply) {
+      if (response.statusCode === 200) {
         let snapshot = JSON.parse(body);  
-        client.sendText(requestMessage.number, snapshot.message);
+        if (snapshot && snapshot.reply) {
+         client.sendText(requestMessage.number, snapshot.message);
+        }
       }
   });
 }
