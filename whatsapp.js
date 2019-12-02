@@ -43,7 +43,8 @@ function start(client) {
   });
 
   setInterval(() => {
-    client.getUnreadMessages(true, true, true).then(chats => {
+    client.getUnreadMessages(true, true, true)
+    .then(chats => {
       chats.forEach(function (chat, index) {
           if (! chat.isGroup) {
               chat.messages.forEach(function (message, index) {
@@ -59,6 +60,7 @@ function start(client) {
               });
           }
       });
-    });
+    })
+    .catch(error => console.log(error));
   }, 6000);
 }
