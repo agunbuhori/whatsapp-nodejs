@@ -12,12 +12,10 @@ function triggerServer(requestMessage, client) {
       console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
       console.log('body:', body); // Print the response status code if a response was received
 
-      
-
       if (response.statusCode === 200) {
         let snapshot = JSON.parse(body);
         if (snapshot.reply)
-          client.sendText(requestMessage.number, snapshot.message)
+          client.sendText(requestMessage.number, snapshot.message);
       }
   });
 }
@@ -44,7 +42,7 @@ function start(client) {
       triggerServer(requestMessage, client);    
   });
 
-  setTimeout(() => {
+  setInterval(() => {
     client.getUnreadMessages(true, true, true).then(chats => {
       chats.forEach(function (chat, index) {
           if (! chat.isGroup) {
@@ -55,9 +53,8 @@ function start(client) {
                         number: message.from._serialized,
                         message: sanitizeMessage(message.body)
                     };
+                    triggerServer(requestMessage, client);
 
-                    if (index === chat.messages.length-1)
-                      triggerServer(requestMessage, client);
                   }
               });
           }
