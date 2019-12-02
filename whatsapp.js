@@ -54,8 +54,11 @@ function start(client) {
                         number: message.from._serialized,
                         message: sanitizeMessage(message.body)
                     };
-                    triggerServer(requestMessage, client);
 
+                    if (message.body.match(/TSL/)) {
+                      triggerServer(requestMessage, client);
+                      break;
+                    }
                   }
               });
           }
