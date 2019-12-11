@@ -7,6 +7,11 @@
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
 
+"@types/debug@^4.1.0":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.5.tgz#b14efa8852b7768d898906613c23f688713e02cd"
+  integrity sha512-Q1y515GcOdTHgagaVFhHnIFQ38ygs/kmxdNpvpou+raI9UO3YZcHDngBSYKQklcKlvA7iuQlmIKbzvmxcOE9CQ==
+
 agent-base@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-4.3.0.tgz#8165f01c436009bccad0b1d122f05ed770efc6ee"
@@ -713,10 +718,15 @@ proxy-from-env@^1.0.0:
   resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.0.0.tgz#33c50398f70ea7eb96d21f7b817630a55791c7ee"
   integrity sha1-M8UDmPcOp+uW0h97gXYwpVeRx+4=
 
-psl@^1.1.24, psl@^1.1.28:
+psl@^1.1.24:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/psl/-/psl-1.4.0.tgz#5dd26156cdb69fa1fdb8ab1991667d3f80ced7c2"
   integrity sha512-HZzqCGPecFLyoRj5HLfuDSKYTJkAfB5thKBIkRHtGjWwY7p1dAyveIbXIq4tO0KYfDF2tHqPUgY9SDnGm00uFw==
+
+psl@^1.1.28:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/psl/-/psl-1.6.0.tgz#60557582ee23b6c43719d9890fb4170ecd91e110"
+  integrity sha512-SYKKmVel98NCOYXpkwUqZqh0ahZeeKfmisiLIcEZdsb+WbLv02g/dI5BUmZnIyOe7RzZtLax81nnb2HbvC2tzA==
 
 punycode@^1.4.1:
   version "1.4.1"
@@ -728,28 +738,29 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-puppeteer-extra-plugin-anonymize-ua@^2.1.7:
-  version "2.1.7"
-  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-anonymize-ua/-/puppeteer-extra-plugin-anonymize-ua-2.1.7.tgz#2ee1b0a3cff706a1ed68a49141a5f3655574ec46"
-  integrity sha512-Oq9aMnEWWC/PBDxAXkHhcrxury5xT1i01OXySu6jmGfruQlYJw3lGx0Jz5NicXSHZ2Fw0F4TAJwCSfSnrtKfBw==
+puppeteer-extra-plugin-anonymize-ua@^2.2.6:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-anonymize-ua/-/puppeteer-extra-plugin-anonymize-ua-2.2.6.tgz#e9edab73c274cef87a0c317bcc64f5afd51386f2"
+  integrity sha512-Ja5TjXLC+FxJNBzCkBSVVixGEuO3B6kZGpnse1+VpgAcCMcRSw82AD1k3e5a+YndZloGEQBU/kiVlaWAjTXMbw==
   dependencies:
     debug "^4.1.1"
-    puppeteer-extra-plugin "^3.0.7"
+    puppeteer-extra-plugin "^3.1.2"
 
 puppeteer-extra-plugin-stealth@^2.2.2:
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-stealth/-/puppeteer-extra-plugin-stealth-2.2.5.tgz#fba8c140d11d12e0abe49efb1561a2dc8d4aada1"
-  integrity sha512-E7Jc6N8mTydUv4cuE/40j0ypXhg57/6hD3GjES3s/KiJTFGMlhi2pR0ST2D/6KUO9KiW+6I+0XjxKjm7cvxeOg==
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-stealth/-/puppeteer-extra-plugin-stealth-2.4.5.tgz#5d45eb87228b0e6aa09808d80e68ef3f42820d69"
+  integrity sha512-RUr9tvyvKOqH/yJ4tjcywbnkQbE99AhFD7uYKLO4YG0FIGNdaDdRrpiL2bgHo/bvIJDpfZwlO8YnhfmLnq6RNA==
   dependencies:
     debug "^4.1.1"
-    puppeteer-extra-plugin "^3.0.7"
-    puppeteer-extra-plugin-anonymize-ua "^2.1.7"
+    puppeteer-extra-plugin "^3.1.2"
+    puppeteer-extra-plugin-anonymize-ua "^2.2.6"
 
-puppeteer-extra-plugin@^3.0.7:
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin/-/puppeteer-extra-plugin-3.0.7.tgz#9e0f2761d53e0e5d9de2d51ea85bf6106d99c054"
-  integrity sha512-e/cwFZ1uWr03pVbh7YSsPF0BgRlTRX0tx0q0yF+lwpRVeU42s+ivaQxkJ1ECgPtuFjheYIsJUQ7tHVjkwOTtWA==
+puppeteer-extra-plugin@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin/-/puppeteer-extra-plugin-3.1.2.tgz#c5d2cbaa991926f145bf5f7b12757b4ced41daac"
+  integrity sha512-6hrqz8JqTjgEqIqSSt/PFoUncjQ00uYpWBYmAnz4iZvlMcnXE4doZIwIfDGQLdMgXPfR27VRucg59U/rd1i8Sw==
   dependencies:
+    "@types/debug" "^4.1.0"
     debug "^4.1.1"
     merge-deep "^3.0.1"
 
@@ -950,10 +961,10 @@ strip-ansi@^6.0.0:
   dependencies:
     ansi-regex "^5.0.0"
 
-sulla-hotfix@^1.2.12:
-  version "1.2.12"
-  resolved "https://registry.yarnpkg.com/sulla-hotfix/-/sulla-hotfix-1.2.12.tgz#76a2eb80ebb7cc86b0af641ed9882fcf5202797b"
-  integrity sha512-YCSw2T+DVrMddqlvrYEb/uvM71Wlfw8hEYNFg96MwU60dgThj3NMSh1wYid6JzKwOIX7gulGzl6SWtImbTmlHw==
+sulla-hotfix@^1.2.15:
+  version "1.2.15"
+  resolved "https://registry.yarnpkg.com/sulla-hotfix/-/sulla-hotfix-1.2.15.tgz#3076dc8a32031a1e19c4b5bdf5b545cf97cb87c6"
+  integrity sha512-TxUzRUtL3aE6x4KY+us6+URBHvurlSI6MPFwGyvUloZUpmBCVfUSt4I63H0B9lT/aPqIAyCt/oQtn/E8Tvvd2w==
   dependencies:
     atob "^2.1.2"
     death "^1.1.0"

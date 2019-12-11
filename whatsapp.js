@@ -22,16 +22,15 @@ function triggerServer(requestMessage, client) {
 
 function sanitizeMessage(message) {
   if (typeof message === 'string') {
-    message = message.replace(/^.*\[/, "TSL_[");
-    message = message.replace(/\].*$/, "]");
-
+    message = message.replace(/.*TSL/, "TSL");
+    message = message.replace(/\].*/, "]");
     return message;
   }
 
   return message;
 }
 
-function start(client) {
+async function start(client) {
   client.onMessage(message => {
     const requestMessage = {
         number: message.from,
@@ -42,28 +41,29 @@ function start(client) {
       triggerServer(requestMessage, client);    
   });
 
-  setInterval(() => {
-    client.getUnreadMessages(true, true, true)
-    .then(chats => {
-      chats.forEach(function (chat, index) {
-          if (! chat.isGroup) {
-              chat.messages.forEach(function (message, index) {
+    await client.getUnreadMessages(true, true, true)
+    .then(async chats => {
+      const requestMessages = [];
+      await chats.forEach(function (chat, i) {
+          chat.messages.forEach(function (message, i) {
+            if (typeof message.body === 'string' && message.body.match(/TSL\_/)) {
+              const requestMessage = {
+                  number: message.from._serialized,
+                  message: sanitizeMessage(message.body)
+              };
 
-                  if (typeof message.body === 'string') {
-                    const requestMessage = {
-                        number: message.from._serialized,
-                        message: sanitizeMessage(message.body)
-                    };
-
-                    if (message.body.match(/TSL/)) {
-                      triggerServer(requestMessage, client);
-                      break;
-                    }
-                  }
-              });
-          }
+              requestMessages.push(requestMessage);
+            }
+          });
       });
-    })
-    .catch(error => console.log(error));
-  }, 6000);
+
+      let requestMessagesLength = requestMessages.length;
+      let sent = 0;
+
+      setInterval(() => {
+        triggerServer(requestMessages[sent], client);
+        if (sent < requestMessagesLength)
+          sent++;
+      }, 2000);
+    });
 }
