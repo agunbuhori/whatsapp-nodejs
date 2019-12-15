@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "request": "^2.88.0",
+    "socket.io-client": "^2.3.0",
     "sulla-hotfix": "^1.2.15"
   }
 }

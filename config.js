@@ -1,4 +1,5 @@
 const config = {
+    websocket_host: "http://",
     callback_url: "callback",
     authorization_token: "12345",
     required_code: /TSL/,
@@ -7,6 +8,7 @@ const config = {
         if (typeof string === 'string') {
             string = string.replace(/.*\[/, "[");
             string = string.replace(/\].*/, "]");
+            string = string.replace(/\ /, "");
         
             return string;
         }

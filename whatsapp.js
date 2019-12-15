@@ -1,11 +1,12 @@
 const sulla = require('sulla-hotfix');
 const request = require('request');
 const config = require('./config');
+const socket = require('socket.io-client')(config.websocket_host);
 
 function triggerServer(requestMessage, client) {
-  if (config.test_mode)
+  if (config.test_mode) {
     return client.sendText(requestMessage.number, config.reply_test_message);
-  else if (requestMessage.message.match(config.required_code)) {
+  } else if (requestMessage.message.match(config.required_code)) {
     return request.post({
         url: config.callback_url, 
         body: JSON.stringify(requestMessage), 
@@ -14,9 +15,7 @@ function triggerServer(requestMessage, client) {
           "Content-Type": "application/json"
         }
       }, function (error, response, body) {
-        console.log('error:', error);
-        console.log('statusCode:', response && response.statusCode);
-        console.log('body:', body);
+        console.log({error, body, response})
 
         if (error)
           return false;
@@ -44,13 +43,13 @@ sulla.create().then(client => start(client));
      * @return void
      */
     client.onMessage(message => {
+      if ('string' === typeof message.body)
       const requestMessage = {
           number: message.from,
           message: sanitizeMessage(message.body)
       };
 
-      if (typeof requestMessage.message === 'string')
-        triggerServer(requestMessage, client);    
+      triggerServer(requestMessage, client);    
     });
 
     /**
@@ -60,11 +59,11 @@ sulla.create().then(client => start(client));
      * @return void
      */
     await client.getUnreadMessages(true, true, true).then(async chats => {
-      const requestMessages = [];
+      let requestMessages = [];
 
       await chats.forEach(function (chat, i) {
         chat.messages.forEach(function (message, i) {
-          if (typeof message.body === 'string' && message.body.match(config.required_code)) {
+          if ('string' === typeof message.body && message.body.match(config.required_code)) {
 
             const requestMessage = {
                 number: message.from._serialized,
@@ -80,41 +79,31 @@ sulla.create().then(client => start(client));
       let sent = 0;
 
       if (requestMessagesLength > 0) {
-        const interval = setInterval(() => {
+        setInterval(() => {
           triggerServer(requestMessages[sent], client);
           
           if (sent < requestMessagesLength-1)
             sent++;
 
-          if (sent === requestMessagesLength-1)
-            clearInterval(interval);
+          if (sent === requestMessagesLength-1) {
+            requestMessages = [];
+            sent = 0;
+          }
         }, config.crawling_timeout);
       }
   });
-  
-  if (config.blast_mode) {
-    const blasts = setInterval(() => {
-      request.get({
-        url: config.blast_message_url, 
-        headers: {
-          "Authorization": config.authorization_token,
-          "Content-Type": "application/json"
-        }
-      }, function (error, response, body) {
-        if (error) {
-          clearInterval(blasts);
-          return false;
-        }
-        
-        if (response.statusCode === 200) {
-          let snapshot = JSON.parse(body);
 
-          if (snapshot.message && snapshot.number) {
-            let { message, number } = snapshot;
-            client.sendText(number, message);
-          }
-        }
-      });
-    }, config.blast_timeout);
-  }
+  /**
+   * If there is a message that must be sent to a number
+   * 
+   * @return void
+   */
+  socket.on("send_message", function (requestMessage) {
+    if (config.blast_mode) {
+      if (requestMessage.number && requestMessage.message) {
+        const { number, message } = requestMessage;
+        client.sendText(number, message);
+      }
+    }
+  });
 }
