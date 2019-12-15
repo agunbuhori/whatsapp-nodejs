@@ -1,5 +1,5 @@
 const config = {
-    callback_url: "https://api-register.tsl-university.id/receive_message/5dddd9bec1bfdf3a09adda7d",
+    callback_url: "callback",
     authorization_token: "12345",
     required_code: /TSL/,
     crawling_timeout: 2000,
