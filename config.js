@@ -6,7 +6,7 @@ const config = {
     sanitized_code: function (string) {
         if (typeof string === 'string') {
             string = string.replace(/.*\[/, "[");
-            string = string.replace(/.*\]/, "]");
+            string = string.replace(/\].*/, "]");
         
             return string;
         }
